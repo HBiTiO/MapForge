@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio de création de maps et bâtiments pour Garry's Mod.">
-  <title>MapForge — Maps & Bâtiments Garry's Mod</title>
+  <meta name="description" content="Portfolio HBi — création de maps et bâtiments pour Garry's Mod.">
+  <title>HBi — Maps & Bâtiments Garry's Mod</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,47 +16,44 @@
 
   <header class="navbar">
     <a class="logo" href="#accueil">
-      <span class="logo-mark">M</span>
-      <span>MAP<span>FORGE</span></span>
+      <span class="logo-mark"><img src="assets/hbi-logo.jpg" alt="HBi"></span>
+      <span>HBi<span> MAPPING</span></span>
     </a>
-    <nav>
+
+    <nav id="main-nav">
       <a href="#accueil">Accueil</a>
-      <a href="#projets">Projets</a>
+      <a href="#projets">Mes projets</a>
       <a href="#services">Services</a>
       <a href="#apropos">À propos</a>
       <a class="nav-contact" href="#contact">Me contacter</a>
     </nav>
-    <button class="menu-btn" aria-label="Ouvrir le menu">☰</button>
+    <button class="menu-btn" type="button" aria-label="Ouvrir le menu">☰</button>
   </header>
 
   <main>
     <section id="accueil" class="hero">
       <div class="hero-content">
         <div class="eyebrow"><span></span> MAPPEUR GARRY'S MOD</div>
-        <h1>Je crée des <em>mondes</em><br>pour vos serveurs.</h1>
-        <p>Maps, bâtiments et environnements sur mesure pour Garry's Mod. Des créations pensées pour le gameplay, l'immersion et les performances.</p>
+        <h1>Je crée des <em>maps</em><br>à votre image.</h1>
+        <p>Création de maps, bâtiments et environnements sur mesure pour Garry's Mod. Découvrez mes réalisations et contactez-moi pour votre prochain projet.</p>
+
         <div class="hero-actions">
-          <a class="btn primary" href="#projets">Découvrir mes projets <b>→</b></a>
-          <a class="btn secondary" href="#contact">Parlons de votre projet</a>
+          <a class="btn primary" href="#projets">Voir mes projets <b>→</b></a>
+          <a class="btn secondary" href="#contact">Me contacter</a>
         </div>
+
         <div class="stats">
-          <div><strong>20+</strong><span>Projets créés</span></div>
+          <div><strong id="project-count">0</strong><span>Projets présentés</span></div>
           <div><strong>GMod</strong><span>Spécialisation</span></div>
-          <div><strong>Sur mesure</strong><span>Chaque projet</span></div>
+          <div><strong>Sur mesure</strong><span>Chaque création</span></div>
         </div>
       </div>
+
       <div class="hero-art">
-        <div class="scene-card">
-          <div class="scene-top"><span>PROJECT / 001</span><span>HAMMER++</span></div>
-          <div class="fake-map">
-            <div class="building b1"></div><div class="building b2"></div><div class="building b3"></div>
-            <div class="road r1"></div><div class="road r2"></div>
-            <div class="grid"></div>
-          </div>
-          <div class="scene-bottom">
-            <span>ENVIRONMENT DESIGN</span>
-            <strong>GARRY'S MOD</strong>
-          </div>
+        <div class="logo-card">
+          <div class="logo-card-top"><span>HBi</span><span>MAPS & BUILDINGS</span></div>
+          <img src="assets/hbi-logo.jpg" alt="Logo HBi">
+          <div class="logo-card-bottom"><span>CRÉATION SUR MESURE</span><span>GARRY'S MOD</span></div>
         </div>
       </div>
     </section>
@@ -65,75 +62,33 @@
       <div class="section-heading">
         <div>
           <div class="eyebrow"><span></span> PORTFOLIO</div>
-          <h2>Mes derniers <em>projets</em></h2>
+          <h2>Mes <em>projets</em></h2>
         </div>
-        <p>Une sélection de maps et bâtiments réalisés pour différents univers Garry's Mod.</p>
+        <p>Choisis une catégorie ou affiche toutes mes créations. Les projets affichés ici sont entièrement configurables.</p>
       </div>
 
-      <div class="filters">
-        <button class="filter active" data-filter="all">Tous</button>
-        <button class="filter" data-filter="map">Maps</button>
-        <button class="filter" data-filter="building">Bâtiments</button>
-        <button class="filter" data-filter="scp">SCP</button>
-        <button class="filter" data-filter="rp">RP</button>
+      <div class="filters" id="filters"></div>
+      <div class="projects" id="projects"></div>
+      <div class="empty-state hidden" id="empty-state">Aucun projet dans cette catégorie pour le moment.</div>
+
+      <div class="portfolio-note">
+        <strong>Tu contrôles le contenu :</strong> les projets, catégories, images, descriptions, prix et liens de paiement se modifient dans <code>projects.js</code>.
       </div>
-
-      <div class="projects">
-        <article class="project" data-category="map scp">
-          <div class="project-image placeholder p1"><span>IMAGE PROJET</span></div>
-          <div class="project-info">
-            <div><span class="tag">MAP</span><span class="tag">SCP</span></div>
-            <h3>Complexe SCP — Installation souterraine</h3>
-            <p>Complexe complet avec zones de confinement, sécurité, scientifique, médical et administratif.</p>
-            <button class="project-link" data-project="scp">Voir le projet <span>↗</span></button>
-          </div>
-        </article>
-
-        <article class="project" data-category="building rp">
-          <div class="project-image placeholder p2"><span>IMAGE PROJET</span></div>
-          <div class="project-info">
-            <div><span class="tag">BÂTIMENT</span><span class="tag">RP</span></div>
-            <h3>Commissariat — US Roleplay</h3>
-            <p>Environnement pensé pour le RP : accueil, cellules, bureaux, armurerie et zones de service.</p>
-            <button class="project-link" data-project="police">Voir le projet <span>↗</span></button>
-          </div>
-        </article>
-
-        <article class="project" data-category="map rp">
-          <div class="project-image placeholder p3"><span>IMAGE PROJET</span></div>
-          <div class="project-info">
-            <div><span class="tag">MAP</span><span class="tag">RP</span></div>
-            <h3>Ville américaine — Roleplay</h3>
-            <p>Map urbaine avec routes, commerces, quartiers résidentiels et bâtiments accessibles.</p>
-            <button class="project-link" data-project="city">Voir le projet <span>↗</span></button>
-          </div>
-        </article>
-
-        <article class="project" data-category="building">
-          <div class="project-image placeholder p4"><span>IMAGE PROJET</span></div>
-          <div class="project-info">
-            <div><span class="tag">BÂTIMENT</span></div>
-            <h3>Complexe industriel</h3>
-            <p>Architecture industrielle détaillée avec espaces techniques, stockage et circulation RP.</p>
-            <button class="project-link" data-project="industrial">Voir le projet <span>↗</span></button>
-          </div>
-        </article>
-      </div>
-      <div class="portfolio-note">Remplace les blocs « IMAGE PROJET » par tes propres captures dans <code>assets/</code>.</div>
     </section>
 
     <section id="services" class="section services-section">
       <div class="section-heading">
         <div>
           <div class="eyebrow"><span></span> SERVICES</div>
-          <h2>Un projet, de l'idée<br>à la <em>map finale.</em></h2>
+          <h2>De l'idée à la<br><em>création finale.</em></h2>
         </div>
-        <p>Je peux travailler sur une création complète ou intervenir sur une partie précise de votre projet.</p>
+        <p>Créations adaptées à ton besoin : map complète, bâtiment, intérieur ou modification d'un environnement existant.</p>
       </div>
+
       <div class="service-grid">
         <div class="service"><div class="service-icon">◈</div><h3>Création de maps</h3><p>Maps complètes pensées pour le gameplay, la circulation et l'immersion.</p></div>
         <div class="service"><div class="service-icon">▣</div><h3>Bâtiments</h3><p>Commissariats, commerces, bases, laboratoires et bâtiments sur mesure.</p></div>
-        <div class="service"><div class="service-icon">⌘</div><h3>Mapping RP</h3><p>Des environnements adaptés aux mécaniques et besoins de votre serveur.</p></div>
+        <div class="service"><div class="service-icon">⌘</div><h3>Environnements</h3><p>Création d'intérieurs, zones spécifiques et décors adaptés à ton serveur.</p></div>
         <div class="service"><div class="service-icon">△</div><h3>Optimisation</h3><p>Travail sur la visibilité, les performances et la structure de la map.</p></div>
       </div>
     </section>
@@ -143,8 +98,8 @@
         <div class="about-number">01</div>
         <div>
           <div class="eyebrow"><span></span> À PROPOS</div>
-          <h2>Des environnements qui ont<br><em>une vraie identité.</em></h2>
-          <p>Je crée des environnements Garry's Mod en accordant autant d'importance au détail qu'au gameplay. Chaque espace est pensé pour être beau, lisible et agréable à jouer.</p>
+          <h2>Des créations avec<br><em>une vraie identité.</em></h2>
+          <p>Je crée des environnements Garry's Mod en accordant de l'importance au détail, au rendu et au gameplay. Chaque projet peut être adapté à tes besoins.</p>
           <div class="tools"><span>Hammer++</span><span>Source Engine</span><span>Garry's Mod</span><span>Level Design</span></div>
         </div>
       </div>
@@ -153,35 +108,65 @@
     <section id="contact" class="contact">
       <div class="contact-inner">
         <div class="eyebrow"><span></span> CONTACT</div>
-        <h2>Vous avez un projet<br>en <em>tête ?</em></h2>
-        <p>Décrivez-moi votre idée et voyons ensemble comment la transformer en environnement jouable.</p>
-        <div class="contact-actions">
-          <a class="btn primary" href="mailto:contact@exemple.fr">M'envoyer un email ↗</a>
-          <a class="btn secondary" href="https://discord.com/" target="_blank" rel="noopener">Mon Discord</a>
+        <h2>Un projet à<br><em>réaliser ?</em></h2>
+        <p>Pour une commande, une question ou une demande de création, contacte-moi directement.</p>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <span class="contact-icon">✉</span>
+            <div>
+              <small>EMAIL</small>
+              <strong>mbkdodos@gmail.com</strong>
+            </div>
+            <a href="mailto:mbkdodos@gmail.com">Écrire →</a>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon discord-icon">◉</span>
+            <div>
+              <small>DISCORD</small>
+              <strong>HBiTiO</strong>
+              <span class="contact-sub">@hbitio</span>
+            </div>
+            <button type="button" id="copy-discord">Copier</button>
+          </div>
         </div>
+
+        <div class="copy-message" id="copy-message">Pseudo Discord copié !</div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="logo"><span class="logo-mark">M</span><span>MAP<span>FORGE</span></span></div>
-    <p>© 2026 MapForge — Maps & environnements Garry's Mod.</p>
+    <a class="logo" href="#accueil">
+      <span class="logo-mark"><img src="assets/hbi-logo.jpg" alt="HBi"></span>
+      <span>HBi<span> MAPPING</span></span>
+    </a>
+    <p>© 2026 HBi — Maps & bâtiments Garry's Mod.</p>
     <a href="#accueil">Retour en haut ↑</a>
   </footer>
 
-  <div class="modal" id="modal">
-    <div class="modal-box">
-      <button class="modal-close">×</button>
-      <div class="modal-image placeholder p1" id="modal-image"><span>IMAGE PROJET</span></div>
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" id="modal-close" aria-label="Fermer">×</button>
+
+      <div class="modal-image" id="modal-image">
+        <img id="modal-image-img" src="" alt="">
+        <div class="image-placeholder" id="modal-placeholder">IMAGE DU PROJET</div>
+      </div>
+
       <div class="modal-body">
         <div id="modal-tags"></div>
         <h2 id="modal-title"></h2>
         <p id="modal-desc"></p>
-        <div class="modal-meta"><span>Garry's Mod</span><span>Level Design</span><span>Sur mesure</span></div>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-buy" id="modal-buy"></div>
       </div>
     </div>
   </div>
 
+  <script src="projects.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
