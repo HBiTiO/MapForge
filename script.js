@@ -9,7 +9,80 @@ function renderProjects(){const list=filter==="Tous"?PROJECTS:PROJECTS.filter(p=
 function arrows(){if($(".gallery-prev",media))return;[["prev","Image précédente",-1],["next","Image suivante",1]].forEach(([d,l,delta])=>{const b=document.createElement("button");b.className=`gallery-arrow gallery-${d}`;b.type="button";b.setAttribute("aria-label",l);b.innerHTML=d==="prev"?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>`:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>`;b.onclick=e=>{e.stopPropagation();change(index+delta,d)};media.append(b)})}
 function thumbs(){gallery.hidden=imgs.length<2;gallery.innerHTML=imgs.map((src,i)=>`<button class="thumb ${i===index?"active":""}" data-i="${i}" type="button"><img src="${esc(src)}" alt=""></button>`).join("");$$('[data-i]',gallery).forEach(b=>b.onclick=()=>{const n=+b.dataset.i;if(n!==index)change(n,n<index?"prev":"next")});$(".thumb.active",gallery)?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})}
 function change(n,d="next"){if(busy||imgs.length<2)return;n=(n+imgs.length)%imgs.length;if(n===index)return;busy=true;const incoming=new Image();incoming.src=imgs[n];const from=d==="next"?42:-42,to=d==="next"?-42:42;incoming.onload=()=>{incoming.className="incoming";incoming.alt=`${current.title} — vue ${n+1}`;media.append(incoming);const old=image.animate([{opacity:1,transform:"translate3d(0,0,0) scale(1)"},{opacity:0,transform:`translate3d(${to}px,0,0) scale(.985)`}],{duration:260,fill:"forwards",easing:"cubic-bezier(.55,.05,.7,.2)"});incoming.animate([{opacity:0,transform:`translate3d(${from}px,0,0) scale(1.025)`},{opacity:1,transform:"translate3d(0,0,0) scale(1)"}],{duration:440,fill:"forwards",easing:"cubic-bezier(.18,.78,.2,1)"}).finished.then(()=>{index=n;image.src=imgs[n];image.alt=incoming.alt;image.style.opacity="1";image.style.transform="none";incoming.remove();old.cancel();thumbs();busy=false}).catch(()=>{index=n;image.src=imgs[n];incoming.remove();thumbs();busy=false})};incoming.onerror=()=>busy=false}
-function openProject(id){current=PROJECTS.find(p=>p.id===id);if(!current)return;lastFocus=document.activeElement;imgs=projectImages(current);index=0;title.textContent=current.title;desc.textContent=current.description;price.textContent=current.price||"";tags.innerHTML=(current.tags||[current.category]).map(t=>`<span>${esc(t)}</span>`).join("");details.innerHTML=(current.details||[]).length?`<b>Ce qui est inclus</b><ul>${current.details.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";details.hidden=!current.details?.length;buy.innerHTML=current.paymentUrl?`<a class="btn primary" href="${esc(current.paymentUrl)}" target="_blank" rel="noopener noreferrer">Acheter${current.price?` — ${esc(current.price)}`:""} ↗</a><small>Paiement sécurisé via le Payment Link Stripe configuré pour ce projet.</small>`:"";preload();arrows();if(imgs.length){image.src=imgs[0];image.alt=`${current.title} — vue 1`;image.classList.add("visible");placeholder.hidden=true;thumbs()}else{image.removeAttribute("src");image.classList.remove("visible");placeholder.hidden=false;gallery.hidden=true}modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.classList.add("modal-open");setTimeout(()=>$(".modal-close")?.focus(),40)}
+function openProject(id){
+  current=PROJECTS.find(p=>p.id===id);
+  if(!current)return;
+
+  lastFocus=document.activeElement;
+  imgs=projectImages(current);
+  index=0;
+
+  title.textContent=current.title;
+  desc.textContent=current.description;
+  price.textContent=current.price||"";
+  tags.innerHTML=(current.tags||[current.category]).map(t=>`<span>${esc(t)}</span>`).join("");
+
+  const hasDetails=Array.isArray(current.details)&&current.details.length;
+  const hasChangelog=Array.isArray(current.changelog)&&current.changelog.length;
+
+  details.innerHTML=`
+    ${hasDetails?`
+      <b>Ce qui est inclus</b>
+      <ul>
+        ${current.details.map(x=>`<li>${esc(x)}</li>`).join("")}
+      </ul>
+    `:""}
+
+    ${hasChangelog?`
+      <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+        <b>Dernière mise à jour — ${esc(current.version||"")}</b>
+        ${current.updated?`<small style="display:block;margin-top:5px;opacity:.7">${esc(current.updated)}</small>`:""}
+        <ul>
+          ${current.changelog.map(x=>`<li>${esc(x)}</li>`).join("")}
+        </ul>
+      </div>
+    `:""}
+  `;
+
+  details.hidden=!hasDetails&&!hasChangelog;
+
+  buy.innerHTML=`
+    ${current.paymentUrl?`
+      <a class="btn primary" href="${esc(current.paymentUrl)}" target="_blank" rel="noopener noreferrer">
+        Acheter${current.price?` — ${esc(current.price)}`:""} ↗
+      </a>
+    `:""}
+
+    ${current.workshopUrl?`
+      <a class="btn ghost" href="${esc(current.workshopUrl)}" target="_blank" rel="noopener noreferrer">
+        Workshop ↗
+      </a>
+    `:""}
+
+    ${current.paymentUrl?`<small>Paiement sécurisé via le Payment Link Stripe configuré pour ce projet.</small>`:""}
+  `;
+
+  preload();
+  arrows();
+
+  if(imgs.length){
+    image.src=imgs[0];
+    image.alt=`${current.title} — vue 1`;
+    image.classList.add("visible");
+    placeholder.hidden=true;
+    thumbs();
+  }else{
+    image.removeAttribute("src");
+    image.classList.remove("visible");
+    placeholder.hidden=false;
+    gallery.hidden=true;
+  }
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.classList.add("modal-open");
+  setTimeout(()=>$(".modal-close")?.focus(),40);
+}
 function preload(){imgs.forEach(s=>{const i=new Image();i.src=s})}
 function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");busy=false;lastFocus?.focus?.()}
 $("#modal-close").onclick=closeModal;modal.onclick=e=>{if(e.target.matches("[data-close-modal]"))closeModal()};document.onkeydown=e=>{if(!modal.classList.contains("open"))return;if(e.key==="Escape")closeModal();if(e.key==="ArrowLeft")change(index-1,"prev");if(e.key==="ArrowRight")change(index+1,"next")};
