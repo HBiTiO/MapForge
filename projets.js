@@ -4,12 +4,12 @@ const PROJECTS = [
     title: "RedWood",
     category: "Maps",
     description: "RedWood est une création originale pour Garry's Mod, entièrement conçue par HBi Mapping. La map propose un environnement travaillé mêlant zones résidentielles, routes, bâtiments et espaces extérieurs, avec une attention particulière portée à l'architecture, aux proportions et à l'ambiance générale. Pensée pour offrir une base immersive et polyvalente, RedWood peut s'intégrer à différents types de projets RP et servir de terrain de jeu complet pour un serveur Garry's Mod.",
-    image: "séquoia-3.jpg",
+    image: "redwood-3.jpg",
     images: [
-      "séquoia-3.jpg",
-      "séquoia-4.jpg",
-      "séquoia-2.jpg",
-      "séquoia-1.jpg"
+      "redwood-3.jpg",
+      "redwood-4.jpg",
+      "redwood-2.jpg",
+      "redwood-1.jpg"
     ],
     tags: ["Garry's Mod", "Map", "Création originale"],
     price: "59,90 €",

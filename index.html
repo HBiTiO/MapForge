@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio HBi — création de maps et bâtiments pour Garry's Mod.">
-  <title>HBi — Maps & Bâtiments Garry's Mod</title>
+  <meta name="description" content="HBi Mapping conçoit des maps, bâtiments et environnements sur mesure pour Garry's Mod.">
+  <title>HBi Mapping — Maps & Bâtiments Garry's Mod</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
 
   <header class="navbar">
     <a class="logo" href="#accueil">
+      <span class="logo-mark"><img src="assets/hbi-logo.jpg" alt=""></span>
       <span>HBi<span> MAPPING</span></span>
     </a>
 
@@ -27,7 +28,7 @@
       <a href="#apropos">À propos</a>
       <a class="nav-contact" href="#contact">Me contacter</a>
     </nav>
-    <button class="menu-btn" type="button" aria-label="Ouvrir le menu">☰</button>
+    <button class="menu-btn" type="button" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false">☰</button>
   </header>
 
   <main>
@@ -64,7 +65,7 @@
           <div class="eyebrow"><span></span> PORTFOLIO</div>
           <h2>Mes <em>projets</em></h2>
         </div>
-        <p>Choisis une catégorie ou affiche toutes mes créations. Les projets affichés ici sont entièrement configurables.</p>
+        <p>Parcours les créations disponibles, avec les images, informations et liens configurés directement dans le projet.</p>
       </div>
 
       <div class="filters" id="filters"></div>
@@ -72,7 +73,7 @@
       <div class="empty-state hidden" id="empty-state">Aucun projet dans cette catégorie pour le moment.</div>
 
       <div class="portfolio-note">
-        <strong>Tu contrôles le contenu :</strong> les projets, catégories, images, descriptions, prix et liens de paiement se modifient dans <code>projects.js</code>.
+        <strong>Contenu du portfolio :</strong> les projets, catégories, images, descriptions, prix et liens de paiement sont centralisés dans <code>projects.js</code>.
       </div>
     </section>
 
@@ -116,17 +117,17 @@
             <span class="contact-icon">✉</span>
             <div>
               <small>EMAIL</small>
-              <strong>mbkdodos@gmail.com</strong>
+              <strong id="contact-email">mbkdodos@gmail.com</strong>
             </div>
-            <a href="mailto:mbkdodos@gmail.com">Écrire →</a>
+            <a id="contact-email-link" href="mailto:mbkdodos@gmail.com">Écrire →</a>
           </div>
 
           <div class="contact-card">
             <span class="contact-icon discord-icon">◉</span>
             <div>
               <small>DISCORD</small>
-              <strong>HBiTiO</strong>
-              <span class="contact-sub">@hbitio</span>
+              <strong id="contact-discord-name">HBiTiO</strong>
+              <span class="contact-sub" id="contact-discord-handle">@hbitio</span>
             </div>
             <button type="button" id="copy-discord">Copier</button>
           </div>

@@ -11,6 +11,8 @@ const modalBuy = document.getElementById("modal-buy");
 const projectsContainer = document.getElementById("projects");
 const filtersContainer = document.getElementById("filters");
 const emptyState = document.getElementById("empty-state");
+const menuButton = document.querySelector(".menu-btn");
+const mainNav = document.getElementById("main-nav");
 
 let currentFilter = "Tous";
 let galleryIndex = 0;
@@ -42,6 +44,18 @@ function categoryList() {
   return ["Tous", ...categories];
 }
 
+function projectImages(project) {
+  const images = Array.isArray(project.images) && project.images.length
+    ? project.images
+    : (project.image ? [project.image] : []);
+
+  return images.map(safeText).filter(Boolean);
+}
+
+function primaryImage(project) {
+  return safeText(project.image || projectImages(project)[0] || "");
+}
+
 function renderFilters() {
   filtersContainer.innerHTML = categoryList().map(category => `
     <button type="button" class="filter ${category === currentFilter ? "active" : ""}" data-filter="${escapeHtml(category)}">
@@ -66,8 +80,9 @@ function renderProjects() {
   emptyState?.classList.toggle("hidden", visible.length !== 0);
 
   projectsContainer.innerHTML = visible.map(project => {
-    const image = project.image
-      ? `<img src="${escapeAttribute(project.image)}" alt="${escapeAttribute(project.title)}" loading="lazy">`
+    const imageSrc = primaryImage(project);
+    const image = imageSrc
+      ? `<img src="${escapeAttribute(imageSrc)}" alt="${escapeAttribute(project.title)}" loading="lazy">`
       : `<div class="project-placeholder">AJOUTE TON IMAGE</div>`;
 
     const tags = (project.tags || [project.category]).map(tag =>
@@ -98,8 +113,21 @@ function renderProjects() {
     button.addEventListener("click", () => openProject(button.dataset.projectId));
   });
 
+  projectsContainer.querySelectorAll(".project-image img").forEach(image => {
+    image.addEventListener("error", () => {
+      image.replaceWith(projectPlaceholder("IMAGE INTROUVABLE"));
+    }, { once: true });
+  });
+
   const count = document.getElementById("project-count");
   if (count) count.textContent = PROJECTS.length;
+}
+
+function projectPlaceholder(text) {
+  const placeholder = document.createElement("div");
+  placeholder.className = "project-placeholder";
+  placeholder.textContent = text;
+  return placeholder;
 }
 
 function ensureGalleryArrows() {
@@ -135,6 +163,7 @@ function preloadGallery(images) {
 
 function updateThumbs() {
   if (!modalGallery) return;
+  modalGallery.hidden = currentGallery.length < 2;
 
   modalGallery.innerHTML = currentGallery.map((src, i) => `
     <button type="button"
@@ -241,7 +270,17 @@ function changeGalleryImage(targetIndex, direction = "next") {
 }
 
 function showFirstGalleryImage() {
-  if (!currentGallery.length) return;
+  if (!currentGallery.length) {
+    modalImage.removeAttribute("src");
+    modalImage.alt = "";
+    modalImage.classList.remove("visible");
+    modalPlaceholder.textContent = "IMAGE DU PROJET";
+    modalPlaceholder?.classList.remove("hidden");
+    modalGallery.innerHTML = "";
+    modalGallery.hidden = true;
+    setArrowVisibility();
+    return;
+  }
 
   galleryIndex = 0;
   modalImage.src = currentGallery[0];
@@ -290,22 +329,20 @@ function openProject(id) {
   ` : "";
   detailsBox.style.display = details.length ? "block" : "none";
 
-  currentGallery = project.images?.length
-    ? project.images
-    : (project.image ? [project.image] : []);
-  galleryProjectTitle = project.title;
+  currentGallery = projectImages(project);
+  galleryProjectTitle = safeText(project.title);
   imageChangeLock = false;
 
   preloadGallery(currentGallery);
   ensureGalleryArrows();
   showFirstGalleryImage();
 
-  modalBuy.innerHTML = `
+  modalBuy.innerHTML = project.paymentUrl ? `
     <a class="btn primary buy-btn" href="${escapeAttribute(project.paymentUrl)}" target="_blank" rel="noopener">
       Acheter — ${escapeHtml(project.price || "Voir le prix")} <b>↗</b>
     </a>
-    <small class="buy-note">Paiement sécurisé via Stripe. Le téléchargement du fichier sera ajouté après la mise en place du système de livraison.</small>
-  `;
+    <small class="buy-note">Ouverture du Payment Link Stripe configuré pour ce projet.</small>
+  ` : "";
 
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
@@ -317,6 +354,12 @@ function closeModal() {
   modal?.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
 }
+
+modalImage?.addEventListener("error", () => {
+  modalImage.classList.remove("visible");
+  modalPlaceholder.textContent = "IMAGE INTROUVABLE";
+  modalPlaceholder?.classList.remove("hidden");
+});
 
 modalClose?.addEventListener("click", closeModal);
 
@@ -333,13 +376,49 @@ document.addEventListener("keydown", event => {
 
 document.getElementById("copy-discord")?.addEventListener("click", async () => {
   try {
-    await navigator.clipboard.writeText("hbitio");
+    await navigator.clipboard.writeText(SITE_CONFIG.discord);
     document.getElementById("copy-message")?.classList.add("show");
     setTimeout(() => document.getElementById("copy-message")?.classList.remove("show"), 1800);
   } catch {
-    window.prompt("Copie ton pseudo Discord :", "hbitio");
+    window.prompt("Copie ton pseudo Discord :", SITE_CONFIG.discord);
   }
 });
 
+function applySiteConfig() {
+  const email = safeText(SITE_CONFIG.email);
+  const discord = safeText(SITE_CONFIG.discord);
+  const discordDisplay = safeText(SITE_CONFIG.discordDisplay || discord);
+
+  const emailNode = document.getElementById("contact-email");
+  const emailLink = document.getElementById("contact-email-link");
+  const discordName = document.getElementById("contact-discord-name");
+  const discordHandle = document.getElementById("contact-discord-handle");
+
+  if (emailNode) emailNode.textContent = email;
+  if (emailLink) emailLink.href = `mailto:${email}`;
+  if (discordName) discordName.textContent = discordDisplay;
+  if (discordHandle) discordHandle.textContent = `@${discord}`;
+}
+
+function setupMobileMenu() {
+  if (!menuButton || !mainNav) return;
+
+  menuButton.addEventListener("click", () => {
+    const open = mainNav.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.textContent = open ? "×" : "☰";
+  });
+
+  mainNav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mainNav.classList.remove("open");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.textContent = "☰";
+    });
+  });
+}
+
+applySiteConfig();
+setupMobileMenu();
 renderFilters();
 renderProjects();
