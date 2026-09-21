@@ -16,14 +16,29 @@ let currentFilter = "Tous";
 let galleryIndex = 0;
 let currentGallery = [];
 let galleryProjectTitle = "";
-let galleryAnimating = false;
+let imageChangeLock = false;
 
 function safeText(value) {
   return String(value ?? "");
 }
 
+function escapeHtml(value) {
+  return safeText(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value);
+}
+
 function categoryList() {
-  const categories = [...new Set(PROJECTS.map(project => safeText(project.category).trim()).filter(Boolean))];
+  const categories = [...new Set(
+    PROJECTS.map(project => safeText(project.category).trim()).filter(Boolean)
+  )];
   return ["Tous", ...categories];
 }
 
@@ -92,102 +107,152 @@ function ensureGalleryArrows() {
   if (!imageBox || imageBox.querySelector(".gallery-prev")) return;
 
   imageBox.insertAdjacentHTML("beforeend", `
-    <button type="button" class="gallery-arrow gallery-prev" aria-label="Image précédente">‹</button>
-    <button type="button" class="gallery-arrow gallery-next" aria-label="Image suivante">›</button>
+    <button type="button" class="gallery-arrow gallery-prev" aria-label="Image précédente">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+    </button>
+    <button type="button" class="gallery-arrow gallery-next" aria-label="Image suivante">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"></path></svg>
+    </button>
   `);
 
   imageBox.querySelector(".gallery-prev").addEventListener("click", event => {
     event.stopPropagation();
-    showGalleryImage(galleryIndex - 1, "prev");
+    changeGalleryImage(galleryIndex - 1, "prev");
   });
 
   imageBox.querySelector(".gallery-next").addEventListener("click", event => {
     event.stopPropagation();
-    showGalleryImage(galleryIndex + 1, "next");
+    changeGalleryImage(galleryIndex + 1, "next");
   });
 }
 
 function preloadGallery(images) {
   images.forEach(src => {
-    const image = new Image();
-    image.src = src;
+    const img = new Image();
+    img.src = src;
   });
 }
 
-function animateImageChange(src, direction) {
-  if (!modalImage || galleryAnimating) return;
+function updateThumbs() {
+  if (!modalGallery) return;
 
-  galleryAnimating = true;
-  const safeDirection = direction === "prev" ? "prev" : "next";
-  const enterClass = safeDirection === "prev" ? "gallery-enter-prev" : "gallery-enter-next";
-  const exitClass = safeDirection === "prev" ? "gallery-exit-prev" : "gallery-exit-next";
+  modalGallery.innerHTML = currentGallery.map((src, i) => `
+    <button type="button"
+            class="gallery-thumb ${i === galleryIndex ? "active" : ""}"
+            data-gallery-index="${i}"
+            aria-label="Voir la vue ${i + 1}">
+      <img src="${escapeAttribute(src)}" alt="" loading="lazy">
+    </button>
+  `).join("");
 
-  modalImage.classList.remove(
-    "gallery-enter-prev", "gallery-enter-next",
-    "gallery-exit-prev", "gallery-exit-next",
-    "gallery-current"
-  );
-
-  modalImage.classList.add(exitClass);
-
-  window.setTimeout(() => {
-    modalImage.src = src;
-    modalImage.classList.remove(exitClass);
-    modalImage.classList.add(enterClass);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        modalImage.classList.remove(enterClass);
-        modalImage.classList.add("gallery-current");
-      });
+  modalGallery.querySelectorAll("[data-gallery-index]").forEach(button => {
+    button.addEventListener("click", () => {
+      const target = Number(button.dataset.galleryIndex);
+      if (target === galleryIndex) return;
+      changeGalleryImage(target, target < galleryIndex ? "prev" : "next");
     });
+  });
 
-    window.setTimeout(() => {
-      galleryAnimating = false;
-    }, 430);
-  }, 170);
+  modalGallery.querySelector(".gallery-thumb.active")?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "center"
+  });
 }
 
-function showGalleryImage(index, direction = "next", immediate = false) {
+function setArrowVisibility() {
+  const prev = document.querySelector(".gallery-prev");
+  const next = document.querySelector(".gallery-next");
+  const show = currentGallery.length > 1;
+  if (prev) prev.hidden = !show;
+  if (next) next.hidden = !show;
+}
+
+/*
+  Transition réellement animée :
+  - l'image actuelle glisse + s'estompe
+  - la nouvelle image entre depuis le côté opposé
+  - léger zoom pour donner un effet dynamique
+*/
+function changeGalleryImage(targetIndex, direction = "next") {
+  if (!currentGallery.length || imageChangeLock) return;
+
+  const nextIndex = (targetIndex + currentGallery.length) % currentGallery.length;
+  if (nextIndex === galleryIndex) return;
+
+  const nextSrc = currentGallery[nextIndex];
+  const oldSrc = modalImage.currentSrc || modalImage.src;
+  const box = document.getElementById("modal-image");
+
+  imageChangeLock = true;
+  galleryIndex = nextIndex;
+  modalImage.alt = `${galleryProjectTitle} — vue ${galleryIndex + 1}`;
+
+  const incoming = new Image();
+  incoming.onload = () => {
+    const incomingEl = incoming;
+    incomingEl.className = "gallery-transition-image incoming";
+    incomingEl.alt = modalImage.alt;
+    box.appendChild(incomingEl);
+
+    const fromX = direction === "next" ? 42 : -42;
+    const toX = direction === "next" ? -42 : 42;
+
+    const oldAnimation = modalImage.animate([
+      { opacity: 1, transform: "translate3d(0,0,0) scale(1)" },
+      { opacity: 0, transform: `translate3d(${toX}px,0,0) scale(.985)` }
+    ], {
+      duration: 260,
+      easing: "cubic-bezier(.55,.05,.7,.2)",
+      fill: "forwards"
+    });
+
+    incomingEl.animate([
+      { opacity: 0, transform: `translate3d(${fromX}px,0,0) scale(1.025)` },
+      { opacity: 1, transform: "translate3d(0,0,0) scale(1)" }
+    ], {
+      duration: 480,
+      easing: "cubic-bezier(.18,.78,.2,1)",
+      fill: "forwards"
+    }).finished.then(() => {
+      modalImage.src = nextSrc;
+      modalImage.style.opacity = "1";
+      modalImage.style.transform = "translate3d(0,0,0) scale(1)";
+      modalImage.style.filter = "none";
+      incomingEl.remove();
+      oldAnimation.cancel();
+      updateThumbs();
+      imageChangeLock = false;
+    }).catch(() => {
+      incomingEl.remove();
+      modalImage.src = nextSrc;
+      modalImage.style.opacity = "1";
+      modalImage.style.transform = "none";
+      updateThumbs();
+      imageChangeLock = false;
+    });
+  };
+
+  incoming.onerror = () => {
+    imageChangeLock = false;
+  };
+
+  incoming.src = nextSrc;
+}
+
+function showFirstGalleryImage() {
   if (!currentGallery.length) return;
 
-  const nextIndex = (index + currentGallery.length) % currentGallery.length;
-  galleryIndex = nextIndex;
-  const src = currentGallery[galleryIndex];
-
-  if (immediate) {
-    modalImage.src = src;
-    modalImage.classList.remove("gallery-enter-prev", "gallery-enter-next", "gallery-exit-prev", "gallery-exit-next");
-    modalImage.classList.add("gallery-current");
-    modalImage.classList.add("visible");
-  } else {
-    animateImageChange(src, direction);
-  }
-
-  modalImage.alt = `${galleryProjectTitle} — vue ${galleryIndex + 1}`;
+  galleryIndex = 0;
+  modalImage.src = currentGallery[0];
+  modalImage.alt = `${galleryProjectTitle} — vue 1`;
+  modalImage.style.opacity = "1";
+  modalImage.style.transform = "translate3d(0,0,0) scale(1)";
+  modalImage.classList.add("visible");
   modalPlaceholder?.classList.add("hidden");
 
-  if (modalGallery) {
-    modalGallery.innerHTML = currentGallery.map((imageSrc, i) => `
-      <button type="button" class="gallery-thumb ${i === galleryIndex ? "active" : ""}" data-gallery-index="${i}" aria-label="Voir la vue ${i + 1}">
-        <img src="${escapeAttribute(imageSrc)}" alt="" loading="lazy">
-      </button>
-    `).join("");
-
-    modalGallery.querySelectorAll("[data-gallery-index]").forEach(button => {
-      button.addEventListener("click", () => {
-        const target = Number(button.dataset.galleryIndex);
-        const direction = target < galleryIndex ? "prev" : "next";
-        showGalleryImage(target, direction);
-      });
-    });
-
-    modalGallery.querySelector(".gallery-thumb.active")?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center"
-    });
-  }
+  updateThumbs();
+  setArrowVisibility();
 }
 
 function ensureDetailsBox() {
@@ -197,7 +262,6 @@ function ensureDetailsBox() {
   box = document.createElement("div");
   box.id = "modal-details";
   box.className = "modal-details";
-
   modalBuy.parentNode.insertBefore(box, modalBuy);
   return box;
 }
@@ -230,20 +294,11 @@ function openProject(id) {
     ? project.images
     : (project.image ? [project.image] : []);
   galleryProjectTitle = project.title;
-  galleryIndex = 0;
-  galleryAnimating = false;
+  imageChangeLock = false;
 
   preloadGallery(currentGallery);
   ensureGalleryArrows();
-
-  if (currentGallery.length) {
-    showGalleryImage(0, "next", true);
-  } else {
-    modalImage.removeAttribute("src");
-    modalImage.classList.remove("visible");
-    modalPlaceholder?.classList.remove("hidden");
-    if (modalGallery) modalGallery.innerHTML = "";
-  }
+  showFirstGalleryImage();
 
   modalBuy.innerHTML = `
     <a class="btn primary buy-btn" href="${escapeAttribute(project.paymentUrl)}" target="_blank" rel="noopener">
@@ -258,8 +313,8 @@ function openProject(id) {
 }
 
 function closeModal() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
+  modal?.classList.remove("open");
+  modal?.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
 }
 
@@ -272,8 +327,8 @@ modal?.addEventListener("click", event => {
 document.addEventListener("keydown", event => {
   if (!modal?.classList.contains("open")) return;
   if (event.key === "Escape") closeModal();
-  if (event.key === "ArrowLeft") showGalleryImage(galleryIndex - 1, "prev");
-  if (event.key === "ArrowRight") showGalleryImage(galleryIndex + 1, "next");
+  if (event.key === "ArrowLeft") changeGalleryImage(galleryIndex - 1, "prev");
+  if (event.key === "ArrowRight") changeGalleryImage(galleryIndex + 1, "next");
 });
 
 document.getElementById("copy-discord")?.addEventListener("click", async () => {
@@ -285,19 +340,6 @@ document.getElementById("copy-discord")?.addEventListener("click", async () => {
     window.prompt("Copie ton pseudo Discord :", "hbitio");
   }
 });
-
-function escapeHtml(value) {
-  return safeText(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
-}
 
 renderFilters();
 renderProjects();
