@@ -1,18 +1,22 @@
-MAPFORGE — REDWOOD FICHE + GALERIE V2
+MAPFORGE — REDWOOD V3
 
-Fichiers à remplacer dans le dépôt GitHub (branche principal) :
-1. projets.js
-2. script.js
+Modifications :
+- ordre galerie : photo 3, photo 4, photo 2, photo 1
+- transition dynamique directionnelle lors du changement d'image
+- flèches rondes parfaitement centrées verticalement
+- flèches mieux cadrées et adaptées au mobile
+- description RedWood enrichie
+- miniatures synchronisées avec le nouvel ordre
 
-Fichier CSS :
-- copier le contenu de gallery.css.txt à la fin de style.css
+Fichiers :
+1. remplacer projets.js
+2. remplacer script.js
+3. copier gallery.css.txt à la fin de style.css
 
-Important :
-- Les images actuelles utilisées sont séquoia-1.jpg à séquoia-4.jpg.
-- Le bouton d'achat utilise le lien Stripe actuel de RedWood.
-- Le téléchargement VMF sécurisé n'est PAS encore activé. Il sera ajouté après paiement via un système serveur/webhook Stripe.
+Les images utilisées restent :
+séquoia-1.jpg
+séquoia-2.jpg
+séquoia-3.jpg
+séquoia-4.jpg
 
-Après modification :
-- Commit directement sur principal.
-- Attendre le déploiement GitHub Pages.
-- Ctrl + F5 sur https://hbitio.github.io/MapForge/
+Le site utilise toujours le paiement Stripe existant.
