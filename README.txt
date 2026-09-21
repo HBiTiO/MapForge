@@ -15,3 +15,12 @@ Corrections de cette version :
 - le visuel d'accueil conserve uniquement « CRÉATION ORIGINALE » et « HBi Mapping »
 
 Le site est prévu pour GitHub Pages depuis la branche main à la racine du dépôt.
+
+
+Corrections visuelles :
+- MapForge remplace l'ancien libellé « LEVEL DESIGN » dans le hero.
+- Le compteur « projet » est aligné avec les autres éléments du hero.
+- Le texte de catalogue piloté par projects.js a été retiré.
+- Le service Bâtiments utilise une icône issue de la quatrième image fournie, nettoyée et recolorée dans les tons HBi Mapping.
+- Le contact Discord utilise une icône locale.
+- Le bouton de fermeture de la fenêtre projet centre parfaitement la croix.
