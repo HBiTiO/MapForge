@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio HBi — création de maps et bâtiments pour Garry's Mod.">
+  <title>HBi — Maps & Bâtiments Garry's Mod</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="logo.png?v=2">
+</head>
+<body>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <header class="navbar">
+    <a class="logo" href="#accueil">
+      <span class="logo-mark"><img src="site-logo.png" alt="HBi Mapping"></span>
+      <span>HBi<span> MAPPING</span></span>
+    </a>
+
+    <nav id="main-nav">
+      <a href="#accueil">Accueil</a>
+      <a href="#projets">Mes projets</a>
+      <a href="#services">Services</a>
+      <a href="#apropos">À propos</a>
+      <a class="nav-contact" href="#contact">Me contacter</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Ouvrir le menu">☰</button>
+  </header>
+
+  <main>
+    <section id="accueil" class="hero">
+      <div class="hero-content">
+        <div class="eyebrow"><span></span> MAPPEUR GARRY'S MOD</div>
+        <h1>Je crée des <em>maps</em><br>à votre image.</h1>
+        <p>Création de maps, bâtiments et environnements sur mesure pour Garry's Mod. Découvrez mes réalisations et contactez-moi pour votre prochain projet.</p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#projets">Voir mes projets <b>→</b></a>
+          <a class="btn secondary" href="#contact">Me contacter</a>
+        </div>
+
+        <div class="stats">
+          <div><strong id="project-count">0</strong><span>Projets présentés</span></div>
+          <div><strong>GMod</strong><span>Spécialisation</span></div>
+          <div><strong>Sur mesure</strong><span>Chaque création</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="logo-card">
+          <div class="logo-card-top"><span>HBi</span><span>MAPS & BUILDINGS</span></div>
+          <img src="assets/hbi-logo.jpg" alt="Logo HBi">
+          <div class="logo-card-bottom"><span>CRÉATION SUR MESURE</span><span>GARRY'S MOD</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projets" class="section">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow"><span></span> PORTFOLIO</div>
+          <h2>Mes <em>projets</em></h2>
+        </div>
+        <p>Choisis une catégorie ou affiche toutes mes créations. Les projets affichés ici sont entièrement configurables.</p>
+      </div>
+
+      <div class="filters" id="filters"></div>
+      <div class="projects" id="projects"></div>
+      <div class="empty-state hidden" id="empty-state">Aucun projet dans cette catégorie pour le moment.</div>
+
+      <div class="portfolio-note">
+        <strong>Tu contrôles le contenu :</strong> les projets, catégories, images, descriptions, prix et liens de paiement se modifient dans <code>projects.js</code>.
+      </div>
+    </section>
+
+    <section id="services" class="section services-section">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow"><span></span> SERVICES</div>
+          <h2>De l'idée à la<br><em>création finale.</em></h2>
+        </div>
+        <p>Créations adaptées à ton besoin : map complète, bâtiment, intérieur ou modification d'un environnement existant.</p>
+      </div>
+
+      <div class="service-grid">
+        <div class="service"><div class="service-icon">◈</div><h3>Création de maps</h3><p>Maps complètes pensées pour le gameplay, la circulation et l'immersion.</p></div>
+        <div class="service"><div class="service-icon">▣</div><h3>Bâtiments</h3><p>Commissariats, commerces, bases, laboratoires et bâtiments sur mesure.</p></div>
+        <div class="service"><div class="service-icon">⌘</div><h3>Environnements</h3><p>Création d'intérieurs, zones spécifiques et décors adaptés à ton serveur.</p></div>
+        <div class="service"><div class="service-icon">△</div><h3>Optimisation</h3><p>Travail sur la visibilité, les performances et la structure de la map.</p></div>
+      </div>
+    </section>
+
+    <section id="apropos" class="about">
+      <div class="about-card">
+        <div class="about-number">01</div>
+        <div>
+          <div class="eyebrow"><span></span> À PROPOS</div>
+          <h2>Des créations avec<br><em>une vraie identité.</em></h2>
+          <p>Je crée des environnements Garry's Mod en accordant de l'importance au détail, au rendu et au gameplay. Chaque projet peut être adapté à tes besoins.</p>
+          <div class="tools"><span>Hammer++</span><span>Source Engine</span><span>Garry's Mod</span><span>Level Design</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="contact-inner">
+        <div class="eyebrow"><span></span> CONTACT</div>
+        <h2>Un projet à<br><em>réaliser ?</em></h2>
+        <p>Pour une commande, une question ou une demande de création, contacte-moi directement.</p>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <span class="contact-icon">✉</span>
+            <div>
+              <small>EMAIL</small>
+              <strong>mbkdodos@gmail.com</strong>
+            </div>
+            <a href="mailto:mbkdodos@gmail.com">Écrire →</a>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-icon discord-icon">◉</span>
+            <div>
+              <small>DISCORD</small>
+              <strong>HBiTiO</strong>
+              <span class="contact-sub">@hbitio</span>
+            </div>
+            <button type="button" id="copy-discord">Copier</button>
+          </div>
+        </div>
+
+        <div class="copy-message" id="copy-message">Pseudo Discord copié !</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo" href="#accueil">
+      <span class="logo-mark"><img src="assets/hbi-logo.jpg" alt="HBi"></span>
+      <span>HBi<span> MAPPING</span></span>
+    </a>
+    <p>© 2026 HBi — Maps & bâtiments Garry's Mod.</p>
+    <a href="#accueil">Retour en haut ↑</a>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" id="modal-close" aria-label="Fermer">×</button>
+
+      <div class="modal-image" id="modal-image">
+        <img id="modal-image-img" src="" alt="">
+        <div class="image-placeholder" id="modal-placeholder">IMAGE DU PROJET</div>
+      </div>
+
+      <div class="modal-gallery" id="modal-gallery" aria-label="Galerie du projet"></div>
+
+      <div class="modal-body">
+        <div id="modal-tags"></div>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-buy" id="modal-buy"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
