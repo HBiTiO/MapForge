@@ -1,17 +1,12 @@
-MapForge / HBi Mapping
+# MapForge — HBi Mapping
 
-Site statique compatible GitHub Pages.
+Version premium du portfolio statique HBi Mapping.
 
 Fichiers principaux :
-- index.html : structure de la page.
-- style.css : styles du site et de la galerie.
-- script.js : rendu des projets, modale, galerie et menu mobile.
-- projects.js : source active des projets affichés par le site.
+- index.html : structure du site
+- style.css : design responsive
+- script.js : filtres, projets, modal, galerie et animations
+- projects.js : projets, images, prix, paiement et contact
+- projets.js : copie de compatibilité
 
-Projet RedWood :
-- categorie : Maps
-- prix : 59,90 EUR
-- galerie : redwood-3.jpg, redwood-4.jpg, redwood-2.jpg, redwood-1.jpg
-- paiement : Payment Link Stripe defini dans projects.js
-
-Les images RedWood existent en racine et dans assets/. La page active utilise les images de la racine pour la galerie du projet et assets/hbi-logo.jpg pour l'identite visuelle.
+Le site est prévu pour GitHub Pages depuis la branche main à la racine du dépôt.
