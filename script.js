@@ -13,6 +13,9 @@ const filtersContainer = document.getElementById("filters");
 const emptyState = document.getElementById("empty-state");
 
 let currentFilter = "Tous";
+let galleryIndex = 0;
+let currentGallery = [];
+let galleryProjectTitle = "";
 
 function safeText(value) {
   return String(value ?? "");
@@ -20,9 +23,7 @@ function safeText(value) {
 
 function categoryList() {
   const categories = [...new Set(
-    PROJECTS
-      .map(project => safeText(project.category).trim())
-      .filter(Boolean)
+    PROJECTS.map(project => safeText(project.category).trim()).filter(Boolean)
   )];
   return ["Tous", ...categories];
 }
@@ -90,6 +91,59 @@ function renderProjects() {
   document.getElementById("project-count").textContent = PROJECTS.length;
 }
 
+function ensureGalleryArrows() {
+  const imageBox = document.getElementById("modal-image");
+  if (!imageBox || imageBox.querySelector(".gallery-prev")) return;
+
+  imageBox.insertAdjacentHTML("beforeend", `
+    <button type="button" class="gallery-arrow gallery-prev" aria-label="Image précédente">‹</button>
+    <button type="button" class="gallery-arrow gallery-next" aria-label="Image suivante">›</button>
+  `);
+
+  imageBox.querySelector(".gallery-prev").addEventListener("click", event => {
+    event.stopPropagation();
+    showGalleryImage(galleryIndex - 1);
+  });
+
+  imageBox.querySelector(".gallery-next").addEventListener("click", event => {
+    event.stopPropagation();
+    showGalleryImage(galleryIndex + 1);
+  });
+}
+
+function showGalleryImage(index) {
+  if (!currentGallery.length) return;
+
+  galleryIndex = (index + currentGallery.length) % currentGallery.length;
+  const src = currentGallery[galleryIndex];
+
+  modalImage.src = src;
+  modalImage.alt = `${galleryProjectTitle} — vue ${galleryIndex + 1}`;
+  modalImage.classList.add("visible");
+  modalPlaceholder.classList.add("hidden");
+
+  if (modalGallery) {
+    modalGallery.innerHTML = currentGallery.map((imageSrc, i) => `
+      <button type="button" class="gallery-thumb ${i === galleryIndex ? "active" : ""}" data-gallery-index="${i}" aria-label="Voir la vue ${i + 1}">
+        <img src="${escapeAttribute(imageSrc)}" alt="" loading="lazy">
+      </button>
+    `).join("");
+
+    modalGallery.querySelectorAll("[data-gallery-index]").forEach(button => {
+      button.addEventListener("click", () => showGalleryImage(Number(button.dataset.galleryIndex)));
+    });
+
+    const activeThumb = modalGallery.querySelector(".gallery-thumb.active");
+    activeThumb?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }
+
+  const prev = document.querySelector(".gallery-prev");
+  const next = document.querySelector(".gallery-next");
+  const multiple = currentGallery.length > 1;
+  if (prev) prev.style.display = multiple ? "grid" : "none";
+  if (next) next.style.display = multiple ? "grid" : "none";
+}
+
 function openProject(id) {
   const project = PROJECTS.find(item => item.id === id);
   if (!project) return;
@@ -110,27 +164,16 @@ function openProject(id) {
     `<span>${escapeHtml(item)}</span>`
   ).join("");
 
-  const galleryImages = project.images?.length ? project.images : (project.image ? [project.image] : []);
-  if (galleryImages.length) {
-    let activeIndex = 0;
-    const showImage = (index) => {
-      activeIndex = index;
-      modalImage.src = galleryImages[activeIndex];
-      modalImage.alt = `${project.title} — vue ${activeIndex + 1}`;
-      modalImage.classList.add("visible");
-      modalPlaceholder.classList.add("hidden");
-      if (modalGallery) {
-        modalGallery.innerHTML = galleryImages.map((src, i) => `
-          <button type="button" class="gallery-thumb ${i === activeIndex ? "active" : ""}" data-gallery-index="${i}" aria-label="Voir la vue ${i + 1}">
-            <img src="${escapeAttribute(src)}" alt="" loading="lazy">
-          </button>
-        `).join("");
-        modalGallery.querySelectorAll("[data-gallery-index]").forEach(button => {
-          button.addEventListener("click", () => showImage(Number(button.dataset.galleryIndex)));
-        });
-      }
-    };
-    showImage(0);
+  currentGallery = project.images?.length
+    ? project.images
+    : (project.image ? [project.image] : []);
+  galleryProjectTitle = project.title;
+  galleryIndex = 0;
+
+  ensureGalleryArrows();
+
+  if (currentGallery.length) {
+    showGalleryImage(0);
   } else {
     modalImage.removeAttribute("src");
     modalImage.classList.remove("visible");
@@ -170,7 +213,11 @@ modal.addEventListener("click", event => {
 });
 
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape" && modal.classList.contains("open")) closeModal();
+  if (!modal.classList.contains("open")) return;
+
+  if (event.key === "Escape") closeModal();
+  if (event.key === "ArrowLeft") showGalleryImage(galleryIndex - 1);
+  if (event.key === "ArrowRight") showGalleryImage(galleryIndex + 1);
 });
 
 document.getElementById("copy-discord").addEventListener("click", async () => {

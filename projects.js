@@ -5,7 +5,7 @@ const PROJECTS = [
     category: "Maps",
     description: "RedWood est une map Garry's Mod créée totalement par mes soins.",
     image: "redwood-1.jpg",
-    gallery: [
+    images: [
       "redwood-1.jpg",
       "redwood-2.jpg",
       "redwood-3.jpg",
@@ -17,3 +17,9 @@ const PROJECTS = [
     status: "Disponible"
   }
 ];
+
+const SITE_CONFIG = {
+  discord: "hbitio",
+  discordDisplay: "HBiTiO",
+  email: "mbkdodos@gmail.com"
+};
