@@ -3,80 +3,102 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mon espace — MapForge</title>
+  <meta name="theme-color" content="#08070d">
+  <title>Mon compte — MapForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="espace.css">
-  <style>
-    .account-logo{
-      width:54px;
-      height:54px;
-      border-radius:14px;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin-bottom:24px;
-      background:#6f35d8;
-      box-shadow:0 10px 30px rgba(111,53,216,.25);
-    }
-    .account-logo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-  </style>
 </head>
 <body class="account-page">
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html">MapForge</a>
-      <nav>
-        <a href="index.html">Accueil</a>
-        <a class="active" href="espace.html">Mon espace</a>
-      </nav>
-    </div>
+  <div class="account-bg" aria-hidden="true">
+    <span class="account-glow glow-one"></span>
+    <span class="account-glow glow-two"></span>
+    <div class="account-shot shot-one"><img src="redwood-3.jpg" alt=""></div>
+    <div class="account-shot shot-two"><img src="redwood-4.jpg" alt=""></div>
+    <div class="account-shot shot-three"><img src="redwood-1.jpg" alt=""></div>
+  </div>
+
+  <header class="navbar account-navbar" id="top">
+    <a class="brand account-brand" href="index.html" aria-label="MapForge — accueil">
+      <span class="brand-mark"><img src="assets/hbi-logo.jpg" alt=""></span>
+      <span>Map<b>Forge</b><small>CRÉATIONS POUR GARRY'S MOD</small></span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+      <a href="index.html#accueil">Accueil</a>
+      <a href="index.html#projets">Projets</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#apropos">À propos</a>
+      <a class="active account-nav-active" href="espace.html">Mon compte</a>
+      <a class="nav-cta" href="index.html#contact">Me contacter</a>
+    </nav>
+
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false">
+      <span></span><span></span>
+    </button>
   </header>
 
-  <main class="account-shell">
-    <section id="authView" class="auth-card">
-      <div class="account-logo">
-        <img src="assets/hbi-logo.jpg" alt="HBi Mapping">
-      </div>
+  <main class="account-main">
+    <div id="authView" class="account-layout">
+      <section class="auth-card">
+        <div class="auth-heading">
+          <div class="auth-logo"><img src="assets/hbi-logo.jpg" alt="HBi Mapping"></div>
+          <div>
+            <div class="auth-kicker">MAPFORGE</div>
+            <h1 id="authTitle">Connexion</h1>
+          </div>
+        </div>
 
-      <h1 id="authTitle">Connexion</h1>
-      <p id="authSubtitle">Connecte-toi pour accéder à tes achats et téléchargements.</p>
+        <p id="authSubtitle" class="auth-subtitle">Connecte-toi pour accéder à tes achats et téléchargements.</p>
 
-      <form id="authForm">
-        <label id="nameLabel" class="optional-field hidden">
-          Nom
-          <input id="displayName" type="text" autocomplete="name">
-        </label>
+        <form id="authForm">
+          <label id="nameLabel" class="optional-field hidden">
+            Nom d'utilisateur
+            <span class="input-wrap"><span class="input-icon">♙</span><input id="displayName" type="text" autocomplete="name"></span>
+          </label>
 
-        <label>
-          Email
-          <input id="email" type="email" autocomplete="email" required>
-        </label>
+          <label>
+            Adresse e-mail
+            <span class="input-wrap"><span class="input-icon">✉</span><input id="email" type="email" autocomplete="email" required></span>
+          </label>
 
-        <label>
-          Mot de passe
-          <input id="password" type="password" autocomplete="current-password" minlength="8" required>
-        </label>
+          <label>
+            Mot de passe
+            <span class="input-wrap"><span class="input-icon">⌑</span><input id="password" type="password" autocomplete="current-password" minlength="8" required></span>
+          </label>
 
-        <label id="confirmLabel" class="optional-field hidden">
-          Confirmer le mot de passe
-          <input id="confirmPassword" type="password" autocomplete="new-password" minlength="8">
-        </label>
+          <label id="confirmLabel" class="optional-field hidden">
+            Confirmer le mot de passe
+            <span class="input-wrap"><span class="input-icon">⌑</span><input id="confirmPassword" type="password" autocomplete="new-password" minlength="8"></span>
+          </label>
 
-        <button class="account-btn primary" type="submit" id="authSubmit">Se connecter</button>
-      </form>
+          <button class="account-btn primary" type="submit" id="authSubmit">Se connecter <span>→</span></button>
+        </form>
 
-      <button class="google-btn" id="googleBtn" type="button">Continuer avec Google</button>
-      <button class="text-btn" id="forgotBtn" type="button">Mot de passe oublié ?</button>
-      <button class="text-btn" id="switchAuth" type="button">Créer un compte</button>
+        <div class="or-divider"><span>OU</span></div>
+        <button class="google-btn" id="googleBtn" type="button"><span class="google-g">G</span> Continuer avec Google</button>
 
-      <p id="authMessage" class="account-message"></p>
-    </section>
+        <button class="text-btn" id="forgotBtn" type="button">Mot de passe oublié ?</button>
+        <p class="switch-line">Vous avez déjà un compte ? <button class="switch-link" id="switchAuth" type="button">Créer un compte</button></p>
+        <p id="authMessage" class="account-message"></p>
+      </section>
+
+      <section class="account-promo">
+        <div class="promo-badge">✦ &nbsp; MAPFORGE</div>
+        <h2>Rejoins l’univers<br><em>MapForge</em></h2>
+        <p>Crée un compte pour acheter nos maps, suivre tes téléchargements et rester informé de nos nouveautés.</p>
+
+        <div class="promo-list">
+          <div class="promo-item"><span>🛒</span><div><strong>Achats sécurisés</strong><small>Accède à tous tes achats</small></div></div>
+          <div class="promo-item"><span>⇩</span><div><strong>Téléchargements</strong><small>Retrouve tes maps facilement</small></div></div>
+          <div class="promo-item"><span>♧</span><div><strong>Nouveautés</strong><small>Sois informé en avant-première</small></div></div>
+        </div>
+
+        <div class="promo-signature"><i></i><span>DES MAPS, DES IDÉES, TON UNIVERS</span></div>
+      </section>
+    </div>
 
     <section id="dashboardView" class="dashboard hidden">
       <div class="account-top">
@@ -90,11 +112,11 @@
 
       <div class="dashboard-grid">
         <aside class="account-sidebar">
-          <button class="side-btn active" data-section="home">🏠 Tableau de bord</button>
-          <button class="side-btn" data-section="purchases">🛒 Mes achats</button>
-          <button class="side-btn" data-section="downloads">📦 Mes téléchargements</button>
-          <button class="side-btn" data-section="updates">🔄 Mises à jour</button>
-          <button class="side-btn" data-section="profile">👤 Mon profil</button>
+          <button class="side-btn active" data-section="home">⌂ &nbsp; Tableau de bord</button>
+          <button class="side-btn" data-section="purchases">🛒 &nbsp; Mes achats</button>
+          <button class="side-btn" data-section="downloads">⇩ &nbsp; Mes téléchargements</button>
+          <button class="side-btn" data-section="updates">↻ &nbsp; Mises à jour</button>
+          <button class="side-btn" data-section="profile">♙ &nbsp; Mon profil</button>
         </aside>
 
         <div class="account-content">
@@ -137,6 +159,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="espace.js"></script>
+  <script src="espace.js?v=20260921-3"></script>
 </body>
 </html>

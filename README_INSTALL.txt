@@ -1,12 +1,24 @@
-INSTALLATION
+MAPFORGE — MISE À JOUR PAGE MON COMPTE
 
-1. Remplace espace.html et espace.js dans ton dépôt GitHub.
-2. Dans espace.js, remplace :
-   REMPLACE_PAR_TA_CLE_PUBLISHABLE_SUPABASE
-   par ta clé publishable Supabase.
-3. Ne mets jamais STRIPE_SECRET_KEY ou STRIPE_WEBHOOK_SECRET dans espace.js.
-4. Le logo MF a été remplacé par assets/hbi-logo.jpg.
+Fichiers inclus :
+- espace.html : nouvelle page Mon compte, proche de la maquette fournie
+- espace.css : design sombre/violet, hero, cartes d'images, responsive
+
+À remplacer dans le dépôt GitHub :
+1. espace.html
+2. espace.css
+
+La page utilise les images RedWood déjà présentes dans le dépôt :
+- redwood-1.jpg
+- redwood-3.jpg
+- redwood-4.jpg
 
 IMPORTANT :
-- Le téléchargement n'est pas encore activé dans ces fichiers.
-- Le lien Télécharger sera relié à la future fonction download après validation du compte et du paiement.
+Le script espace.js actuel du dépôt contient déjà la bonne URL Supabase et la clé publishable.
+Le nouveau espace.html ajoute ?v=20260921-3 à espace.js afin de forcer Chrome à charger la dernière version et éviter le cache.
+
+Pour la navigation principale :
+ajouter dans index.html, entre À propos et Me contacter :
+<a class="account-nav-link" href="espace.html">Mon compte</a>
+
+Après remplacement, fais un commit/push puis Ctrl+F5 sur le site.
