@@ -1,44 +1,23 @@
-# HBi — Portfolio Garry's Mod
+MAPFORGE — PORTFOLIO GARRY'S MOD
 
-## Publier sur GitHub Pages
+Le site est un portfolio statique compatible avec GitHub Pages.
 
-Les fichiers à mettre à la racine du dépôt sont :
-- `index.html`
-- `style.css`
-- `script.js`
-- `projects.js`
-- `assets/hbi-logo.jpg`
+PROJET ACTUEL
+- RedWood
+- Catégorie : Map
+- Prix : 59,90 €
+- Paiement : Stripe (lien LIVE)
+- 4 images incluses dans assets/
 
-## Ajouter une map ou un bâtiment
+AJOUTER UN PROJET
+1. Ajoute les images dans assets/.
+2. Ouvre projects.js.
+3. Ajoute un objet dans PROJECTS.
+4. paymentUrl doit contenir ton lien de paiement si le projet est vendu.
 
-Tout se gère dans `projects.js`.
+IMPORTANT
+Ne mets jamais de clé secrète Stripe (sk_live_...) dans le site.
+Seul le lien public buy.stripe.com doit apparaître dans projects.js.
 
-Exemple :
-
-```js
-{
-  id: "ma-map",
-  title: "Ma nouvelle map",
-  category: "Map",
-  description: "Description de ma création.",
-  image: "assets/ma-map.jpg",
-  tags: ["Map", "Garry's Mod"],
-  price: "120 €",
-  paymentUrl: "https://TON-LIEN-DE-PAIEMENT",
-  status: "Disponible"
-}
-```
-
-- `category` : tu peux écrire ce que tu veux (Map, Bâtiment, Intérieur, etc.).
-- `image` : mets ta capture dans `assets/`.
-- `price` : prix affiché.
-- `paymentUrl` : lien vers ton vrai paiement (Stripe Payment Link, PayPal, Tebex, etc.).
-- Si `paymentUrl` est vide, le site propose de commander par email.
-- Tu peux supprimer ou ajouter autant de projets que tu veux.
-
-## Contact déjà configuré
-
-Email : `mbkdodos@gmail.com`
-Discord : `HBiTiO` / `hbitio`
-
-Le bouton de fermeture de la fiche projet fonctionne avec la croix, un clic hors de la fenêtre ou la touche Échap.
+DEPLOIEMENT
+Le site peut être publié avec GitHub Pages depuis la branche principale, dossier /.

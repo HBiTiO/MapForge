@@ -2,6 +2,7 @@ const modal = document.getElementById("modal");
 const modalClose = document.getElementById("modal-close");
 const modalImage = document.getElementById("modal-image-img");
 const modalPlaceholder = document.getElementById("modal-placeholder");
+const modalGallery = document.getElementById("modal-gallery");
 const modalTitle = document.getElementById("modal-title");
 const modalDesc = document.getElementById("modal-desc");
 const modalTags = document.getElementById("modal-tags");
@@ -109,15 +110,32 @@ function openProject(id) {
     `<span>${escapeHtml(item)}</span>`
   ).join("");
 
-  if (project.image) {
-    modalImage.src = project.image;
-    modalImage.alt = project.title;
-    modalImage.classList.add("visible");
-    modalPlaceholder.classList.add("hidden");
+  const galleryImages = project.images?.length ? project.images : (project.image ? [project.image] : []);
+  if (galleryImages.length) {
+    let activeIndex = 0;
+    const showImage = (index) => {
+      activeIndex = index;
+      modalImage.src = galleryImages[activeIndex];
+      modalImage.alt = `${project.title} — vue ${activeIndex + 1}`;
+      modalImage.classList.add("visible");
+      modalPlaceholder.classList.add("hidden");
+      if (modalGallery) {
+        modalGallery.innerHTML = galleryImages.map((src, i) => `
+          <button type="button" class="gallery-thumb ${i === activeIndex ? "active" : ""}" data-gallery-index="${i}" aria-label="Voir la vue ${i + 1}">
+            <img src="${escapeAttribute(src)}" alt="" loading="lazy">
+          </button>
+        `).join("");
+        modalGallery.querySelectorAll("[data-gallery-index]").forEach(button => {
+          button.addEventListener("click", () => showImage(Number(button.dataset.galleryIndex)));
+        });
+      }
+    };
+    showImage(0);
   } else {
     modalImage.removeAttribute("src");
     modalImage.classList.remove("visible");
     modalPlaceholder.classList.remove("hidden");
+    if (modalGallery) modalGallery.innerHTML = "";
   }
 
   if (project.paymentUrl) {

@@ -1,38 +1,21 @@
-/*
-  ============================================================
-  CONFIGURATION DE TES PROJETS
-  ============================================================
-
-  C'est ICI que tu choisis ce qui apparaît sur ton site.
-
-  Pour ajouter une map/bâtiment :
-  1. Mets l'image dans le dossier assets/
-  2. Copie un bloc ci-dessous
-  3. Change title, category, description, image, price, etc.
-  4. Si tu veux vendre le projet, mets ton vrai lien de paiement
-     dans paymentUrl (Stripe, PayPal, Tebex, Gumroad, etc.).
-
-  Si paymentUrl est vide, le bouton proposera de te contacter.
-*/
-
 const PROJECTS = [
-  /*
-  Exemple :
-
   {
-    id: "ma-map",
-    title: "Ma nouvelle map",
+    id: "redwood",
+    title: "RedWood",
     category: "Map",
-    description: "Description de ma création.",
-    image: "assets/ma-map.jpg",
-    tags: ["Map", "Garry's Mod"],
-    price: "120 €",
-    paymentUrl: "https://TON-LIEN-DE-PAIEMENT",
+    description: "Map Garry's Mod créée totalement par mes soins, avec environnement résidentiel, zones industrielles et bâtiments modernes.",
+    image: "assets/redwood-1.jpg",
+    images: [
+      "assets/redwood-1.jpg",
+      "assets/redwood-2.jpg",
+      "assets/redwood-3.jpg",
+      "assets/redwood-4.jpg"
+    ],
+    tags: ["Map", "Garry's Mod", "Création originale"],
+    price: "59,90 €",
+    paymentUrl: "https://buy.stripe.com/28E3cxdgbdPMe0x8x65gc00",
     status: "Disponible"
-  },
-  */
-
-  // Tu peux mettre ici tes propres projets.
+  }
 ];
 
 const SITE_CONFIG = {
