@@ -2,8 +2,8 @@ const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelecto
 const modal=$("#modal"),media=$("#modal-media"),image=$("#modal-image"),placeholder=$("#modal-placeholder"),gallery=$("#modal-gallery"),title=$("#modal-title"),desc=$("#modal-desc"),tags=$("#modal-tags"),price=$("#modal-price"),details=$("#modal-details"),buy=$("#modal-buy"),projectsBox=$("#projects"),filters=$("#filters"),empty=$("#empty-state");
 let filter="Tous",current=null,imgs=[],index=0,busy=false,lastFocus=null;
 
-const SUPABASE_URL = "https://tedqgheovjafhhwufet.supabase.co";
-const SUPABASE_ANON_KEY = "REMPLACE_PAR_TA_CLE_PUBLISHABLE_SUPABASE";
+const SUPABASE_URL = "https://tedqgheovljafhhwufet.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_0DFcBQlYPjWMmvhYv6dpFQ_UXKM1iWj";
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
@@ -11,7 +11,7 @@ const supabaseClient = window.supabase.createClient(
 );
 
 const CREATE_CHECKOUT_URL =
-  "https://tedqgheovjafhhwufet.supabase.co/functions/v1/create-checkout";
+  "https://tedqgheovljafhhwufet.supabase.co/functions/v1/create-checkout";
 
 const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 const projectImages=p=>Array.isArray(p.images)&&p.images.length?p.images:(p.image?[p.image]:[]);
