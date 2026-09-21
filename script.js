@@ -88,7 +88,8 @@ function renderProjects() {
     button.addEventListener("click", () => openProject(button.dataset.projectId));
   });
 
-  document.getElementById("project-count").textContent = PROJECTS.length;
+  const count = document.getElementById("project-count");
+  if (count) count.textContent = PROJECTS.length;
 }
 
 function ensureGalleryArrows() {
@@ -133,8 +134,11 @@ function showGalleryImage(index) {
       button.addEventListener("click", () => showGalleryImage(Number(button.dataset.galleryIndex)));
     });
 
-    const activeThumb = modalGallery.querySelector(".gallery-thumb.active");
-    activeThumb?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    modalGallery.querySelector(".gallery-thumb.active")?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center"
+    });
   }
 
   const prev = document.querySelector(".gallery-prev");
@@ -142,6 +146,19 @@ function showGalleryImage(index) {
   const multiple = currentGallery.length > 1;
   if (prev) prev.style.display = multiple ? "grid" : "none";
   if (next) next.style.display = multiple ? "grid" : "none";
+}
+
+function ensureDetailsBox() {
+  let box = document.getElementById("modal-details");
+  if (box) return box;
+
+  box = document.createElement("div");
+  box.id = "modal-details";
+  box.className = "modal-details";
+
+  const buy = document.getElementById("modal-buy");
+  buy.parentNode.insertBefore(box, buy);
+  return box;
 }
 
 function openProject(id) {
@@ -164,6 +181,14 @@ function openProject(id) {
     `<span>${escapeHtml(item)}</span>`
   ).join("");
 
+  const detailsBox = ensureDetailsBox();
+  const details = Array.isArray(project.details) ? project.details : [];
+  detailsBox.innerHTML = details.length ? `
+    <div class="modal-details-title">Ce qui est inclus</div>
+    <ul>${details.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+  ` : "";
+  detailsBox.style.display = details.length ? "block" : "none";
+
   currentGallery = project.images?.length
     ? project.images
     : (project.image ? [project.image] : []);
@@ -184,8 +209,9 @@ function openProject(id) {
   if (project.paymentUrl) {
     modalBuy.innerHTML = `
       <a class="btn primary buy-btn" href="${escapeAttribute(project.paymentUrl)}" target="_blank" rel="noopener">
-        Acheter cette création <b>↗</b>
+        Acheter — ${escapeHtml(project.price || "Voir le prix")} <b>↗</b>
       </a>
+      <small class="buy-note">Paiement sécurisé via Stripe. Le téléchargement du fichier sera ajouté dans une prochaine étape.</small>
     `;
   } else {
     const subject = encodeURIComponent(`Commande — ${project.title}`);
@@ -214,13 +240,12 @@ modal.addEventListener("click", event => {
 
 document.addEventListener("keydown", event => {
   if (!modal.classList.contains("open")) return;
-
   if (event.key === "Escape") closeModal();
   if (event.key === "ArrowLeft") showGalleryImage(galleryIndex - 1);
   if (event.key === "ArrowRight") showGalleryImage(galleryIndex + 1);
 });
 
-document.getElementById("copy-discord").addEventListener("click", async () => {
+document.getElementById("copy-discord")?.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(SITE_CONFIG.discord);
     document.getElementById("copy-message").classList.add("show");
