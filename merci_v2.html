@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merci pour votre achat — MapForge</title>
+<link rel="icon" type="image/png" href="logo.png?v=3">
+<style>
+:root{--bg:#08060d;--panel:#100c16;--purple:#9b5cff;--purple2:#6e3bb5;--text:#fff;--muted:#bdb2ca;--soft:#8f829d;--border:rgba(220,193,255,.16);--green:#8ee6b0}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 18px;background:radial-gradient(circle at 50% 0%,rgba(143,82,216,.22),transparent 42%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+.card{width:min(760px,100%);padding:42px 34px 34px;background:linear-gradient(180deg,rgba(24,17,34,.97),rgba(12,9,17,.99));border:1px solid var(--border);border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.48)}
+.logo{display:block;width:72px;height:72px;object-fit:cover;border-radius:18px;margin:0 auto 20px}.check{width:62px;height:62px;margin:0 auto 20px;border-radius:50%;display:grid;place-items:center;background:rgba(142,230,176,.10);border:1px solid rgba(142,230,176,.28);color:var(--green);font-size:30px;font-weight:800}
+h1{margin:0 0 10px;text-align:center;font-size:clamp(30px,5vw,44px)}.intro{margin:0 auto 28px;max-width:590px;text-align:center;color:var(--muted);line-height:1.7}
+.product{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 18px;margin-bottom:22px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:14px}.product strong{font-size:18px}.product span{color:var(--soft);font-size:13px}
+.steps{display:grid;gap:12px;margin-top:8px}.step{padding:20px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:16px}.step-head{display:flex;align-items:center;gap:13px;margin-bottom:9px}.number{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:10px;background:rgba(143,82,216,.16);border:1px solid rgba(220,193,255,.18);color:#d9bdff;font-weight:800}.step h2{margin:0;font-size:17px}.step p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.65}
+.actions{display:flex;flex-wrap:wrap;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:800;font-size:14px;transition:.2s ease}.btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;box-shadow:0 10px 26px rgba(103,57,156,.28)}.btn.secondary{background:rgba(255,255,255,.035);color:#fff;border:1px solid var(--border)}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.install{margin-top:22px;padding:18px 20px;border-radius:16px;background:rgba(143,82,216,.07);border:1px solid rgba(143,82,216,.20)}.install strong{display:block;margin-bottom:8px}.install p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}code{display:inline-block;margin-top:7px;padding:5px 8px;border-radius:7px;background:rgba(0,0,0,.28);color:#d9bdff;font-family:Consolas,monospace;font-size:13px}
+.note{margin-top:20px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.02);color:var(--soft);font-size:13px;line-height:1.6;text-align:center}.back{display:block;margin-top:22px;color:var(--muted);text-decoration:none;font-size:14px;text-align:center}.back:hover{color:#fff}
+@media(max-width:600px){.card{padding:30px 18px 24px}.product{align-items:flex-start;flex-direction:column}.actions{flex-direction:column}.btn{width:100%}}
+</style>
+</head>
+<body>
+<main class="card">
+<img class="logo" src="logo.png?v=3" alt="MapForge">
+<div class="check">✓</div>
+<h1>Merci pour votre achat !</h1>
+<p class="intro">Votre commande RedWood est terminée. Suivez les étapes ci-dessous pour installer la map et récupérer tout le contenu nécessaire.</p>
+
+<div class="product">
+<div><strong>RedWood</strong><br><span>Map Garry's Mod · Version v1.0.0</span></div>
+<strong>59,90 €</strong>
+</div>
+
+<section class="steps">
+<article class="step">
+<div class="step-head"><div class="number">1</div><h2>Abonnez-vous au Workshop</h2></div>
+<p>RedWood utilise du contenu complémentaire disponible sur le Steam Workshop. Abonnez-vous à l'élément Workshop avant d'utiliser la map.</p>
+<div class="actions"><a class="btn primary" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3805682573" target="_blank" rel="noopener noreferrer">Ouvrir le Workshop ↗</a></div>
+</article>
+
+<article class="step">
+<div class="step-head"><div class="number">2</div><h2>Téléchargez la map</h2></div>
+<p>Téléchargez l'archive RedWood contenant le fichier BSP de la map.</p>
+<div class="actions"><a class="btn primary" href="https://github.com/HBiTiO/MapForge/releases/latest/download/RedWood.zip" download>Télécharger RedWood.zip ↓</a></div>
+</article>
+
+<article class="step">
+<div class="step-head"><div class="number">3</div><h2>Installez le fichier BSP</h2></div>
+<p>Ouvrez l'archive téléchargée et placez <strong>RedWood.bsp</strong> dans le dossier maps de Garry's Mod.</p>
+<code>garrysmod/maps/</code>
+</article>
+
+<article class="step">
+<div class="step-head"><div class="number">4</div><h2>Lancez Garry's Mod</h2></div>
+<p>Une fois le Workshop chargé et le BSP installé, lancez Garry's Mod et recherchez la map <strong>RedWood</strong>.</p>
+</article>
+</section>
+
+<div class="install"><strong>📦 Ce que contient RedWood.zip</strong><p>L'archive contient le fichier <strong>RedWood.bsp</strong>. Les contenus complémentaires sont distribués via le Steam Workshop.</p></div>
+<div class="note">Conservez cette page et vos informations d'achat si vous souhaitez retrouver facilement votre téléchargement et le Workshop RedWood.</div>
+<a class="back" href="./">← Retour sur MapForge</a>
+</main>
+</body>
+</html>
