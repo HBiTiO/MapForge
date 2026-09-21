@@ -1,0 +1,33 @@
+/* PATCH — append this to espace.css */
+/* Alignement propre de la navigation du compte */
+.account-navbar .main-nav{
+  height:100%;
+  align-items:center;
+}
+
+.account-navbar .main-nav a{
+  display:flex;
+  align-items:center;
+  height:100%;
+  position:relative;
+}
+
+.account-navbar .main-nav .account-nav-active{
+  display:flex;
+  align-items:center;
+  height:100%;
+  position:relative;
+}
+
+.account-navbar .main-nav .account-nav-active:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:2px;
+  margin:0;
+  background:#a66cff;
+  box-shadow:0 0 18px rgba(166,108,255,.7);
+  border-radius:2px;
+}
