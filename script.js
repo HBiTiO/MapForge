@@ -1,6 +1,18 @@
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const modal=$("#modal"),media=$("#modal-media"),image=$("#modal-image"),placeholder=$("#modal-placeholder"),gallery=$("#modal-gallery"),title=$("#modal-title"),desc=$("#modal-desc"),tags=$("#modal-tags"),price=$("#modal-price"),details=$("#modal-details"),buy=$("#modal-buy"),projectsBox=$("#projects"),filters=$("#filters"),empty=$("#empty-state");
 let filter="Tous",current=null,imgs=[],index=0,busy=false,lastFocus=null;
+
+const SUPABASE_URL = "https://tedqgheovjafhhwufet.supabase.co";
+const SUPABASE_ANON_KEY = "REMPLACE_PAR_TA_CLE_PUBLISHABLE_SUPABASE";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+const CREATE_CHECKOUT_URL =
+  "https://tedqgheovjafhhwufet.supabase.co/functions/v1/create-checkout";
+
 const esc=v=>String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 const projectImages=p=>Array.isArray(p.images)&&p.images.length?p.images:(p.image?[p.image]:[]);
 const cats=()=>["Tous",...new Set(PROJECTS.map(p=>String(p.category||"").trim()).filter(Boolean))];
@@ -166,11 +178,9 @@ function openProject(id){
   details.hidden=!hasDetails&&!hasChangelog;
 
   buy.innerHTML=`
-    ${current.paymentUrl?`
-      <a class="btn primary" href="${esc(current.paymentUrl)}" target="_blank" rel="noopener noreferrer">
-        Acheter${current.price?` — ${esc(current.price)}`:""} ↗
-      </a>
-    `:""}
+    <button class="btn primary" type="button" id="buy-project">
+      Acheter${current.price?` — ${esc(current.price)}`:""} ↗
+    </button>
 
     ${current.workshopUrl?`
       <a class="btn ghost" href="${esc(current.workshopUrl)}" target="_blank" rel="noopener noreferrer">
@@ -178,8 +188,56 @@ function openProject(id){
       </a>
     `:""}
 
-    ${current.paymentUrl?`<small>Paiement sécurisé via le Payment Link Stripe configuré pour ce projet.</small>`:""}
+    <small>Paiement sécurisé via Stripe. Connexion à ton compte requise.</small>
   `;
+
+  const buyButton=$("#buy-project");
+
+  if(buyButton){
+    buyButton.onclick=async()=>{
+      buyButton.disabled=true;
+      buyButton.textContent="Préparation du paiement…";
+
+      try{
+        const {data:{session}}=await supabaseClient.auth.getSession();
+
+        if(!session){
+          window.location.href="espace.html";
+          return;
+        }
+
+        const response=await fetch(CREATE_CHECKOUT_URL,{
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${session.access_token}`,
+            "apikey":SUPABASE_ANON_KEY
+          },
+          body:JSON.stringify({
+            product_id:"redwood"
+          })
+        });
+
+        const data=await response.json();
+
+        if(!response.ok||!data.url){
+          throw new Error(data.error||"Impossible de créer le paiement.");
+        }
+
+        window.location.href=data.url;
+      }catch(error){
+        console.error("Erreur checkout:",error);
+
+        alert(
+          error.message||
+          "Une erreur est survenue lors de la préparation du paiement."
+        );
+
+        buyButton.disabled=false;
+        buyButton.textContent=`Acheter${current.price?` — ${esc(current.price)}`:""} ↗`;
+      }
+    };
+  }
 
   preload();
   arrows();
