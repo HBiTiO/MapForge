@@ -1,0 +1,53 @@
+# MODIFICATIONS À APPLIQUER DANS script.js
+
+## 1 — Boutons Acheter + Workshop
+
+Dans `openProject()`, remplace le bloc actuel `buy.innerHTML = ...` par :
+
+```js
+buy.innerHTML = `
+  ${current.paymentUrl ? `
+    <a class="btn primary" href="${esc(current.paymentUrl)}" target="_blank" rel="noopener noreferrer">
+      Acheter${current.price ? ` — ${esc(current.price)}` : ""} ↗
+    </a>
+  ` : ""}
+
+  ${current.workshopUrl ? `
+    <a class="btn ghost" href="${esc(current.workshopUrl)}" target="_blank" rel="noopener noreferrer">
+      Workshop ↗
+    </a>
+  ` : ""}
+
+  <small>Paiement sécurisé via le Payment Link Stripe configuré pour ce projet.</small>
+`;
+```
+
+## 2 — Détails + changelog
+
+Remplace la partie qui gère `details.innerHTML` et `details.hidden` par :
+
+```js
+const hasDetails = Array.isArray(current.details) && current.details.length;
+const hasChangelog = Array.isArray(current.changelog) && current.changelog.length;
+
+details.innerHTML = `
+  ${hasDetails ? `
+    <b>Ce qui est inclus</b>
+    <ul>
+      ${current.details.map(x => `<li>${esc(x)}</li>`).join("")}
+    </ul>
+  ` : ""}
+
+  ${hasChangelog ? `
+    <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+      <b>Dernière mise à jour — ${esc(current.version || "")}</b>
+      ${current.updated ? `<small style="display:block;margin-top:5px;opacity:.7">${esc(current.updated)}</small>` : ""}
+      <ul>
+        ${current.changelog.map(x => `<li>${esc(x)}</li>`).join("")}
+      </ul>
+    </div>
+  ` : ""}
+`;
+
+details.hidden = !hasDetails && !hasChangelog;
+```
