@@ -1,0 +1,11 @@
+1. Dans supabase-config.js, remplace les deux placeholders par la clé publishable et l'URL Render.
+2. Dans index.html, avant script.js, ajoute:
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="achat-compte.js"></script>
+3. Dans espace.js, mets la même URL Supabase, clé publishable et URL Render.
+4. Remplace server/index.js et server/package.json dans le dépôt GitHub.
+5. Render doit contenir FRONTEND_URL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, REDWOOD_STRIPE_PRICE_ID, STRIPE_SECRET_KEY et STRIPE_WEBHOOK_SECRET, plus tes variables existantes.
+6. Ajoute PUBLIC_API_URL=https://TON-URL-RENDER pour générer les liens de téléchargement.
+7. Stripe webhook: https://TON-URL-RENDER/webhook ; événements checkout.session.completed et checkout.session.async_payment_succeeded.
+8. Après déploiement, teste /health puis inscription, connexion, achat test et présence de la ligne dans Supabase > purchases.

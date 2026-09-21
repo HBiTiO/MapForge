@@ -1,0 +1,3 @@
+window.MAPFORGE_SUPABASE_URL = "https://tedqgheovjafhhwufet.supabase.co";
+window.MAPFORGE_SUPABASE_ANON_KEY = "REMPLACE_PAR_TA_CLE_PUBLISHABLE";
+window.MAPFORGE_API_URL = "REMPLACE_PAR_TON_URL_RENDER";
