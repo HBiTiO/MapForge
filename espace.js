@@ -92,7 +92,7 @@ $("authForm").addEventListener("submit", async (e) => {
         data: {
           display_name: $("displayName").value.trim(),
         },
-        emailRedirectTo: `${location.origin}/espace.html`,
+        emailRedirectTo: "https://hbitio.github.io/MapForge/espace.html",
       },
     });
 
@@ -121,7 +121,7 @@ $("googleBtn").addEventListener("click", async () => {
   const { error } = await sb.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${location.origin}/espace.html`,
+      redirectTo: "https://hbitio.github.io/MapForge/espace.html",
     },
   });
 
@@ -142,7 +142,7 @@ $("forgotBtn").addEventListener("click", async () => {
   }
 
   const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: `${location.origin}/espace.html?reset=1`,
+    redirectTo: "https://hbitio.github.io/MapForge/espace.html?reset=1",
   });
 
   if (error) {
