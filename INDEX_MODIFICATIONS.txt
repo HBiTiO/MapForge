@@ -1,0 +1,63 @@
+MAPFORGE — MODIFICATIONS À APPLIQUER À index.html
+
+1) FAVICON
+Remplacer :
+<link rel="icon" type="image/png" href="logo.png?v=3">
+Par :
+<link rel="icon" type="image/png" href="assets/mapforge-logo.png?v=1">
+<link rel="shortcut icon" type="image/png" href="assets/mapforge-logo.png?v=1">
+
+2) HEADER
+Remplacer :
+<a class="brand" href="#accueil" aria-label="HBi Mapping — accueil">
+  <span class="brand-mark"><img src="assets/hbi-logo.jpg" alt=""></span>
+  <span>HBi <b>MAPPING</b></span>
+</a>
+Par :
+<a class="brand" href="#accueil" aria-label="MapForge — accueil">
+  <span class="brand-mark"><img src="assets/mapforge-logo.png" alt="MapForge"></span>
+  <span>Map<b>Forge</b></span>
+</a>
+
+3) HERO IMAGE
+Remplacer :
+<img src="assets/hbi-logo.jpg" alt="HBi Mapping">
+Par :
+<img src="assets/mapforge-logo.png" alt="MapForge">
+
+4) HERO CAPTION
+Remplacer :
+<strong>HBi Mapping</strong>
+Par :
+<strong>MapForge</strong>
+
+5) DESCRIPTION META
+Remplacer :
+<meta name="description" content="HBi Mapping — maps, bâtiments et environnements sur mesure pour Garry's Mod.">
+Par :
+<meta name="description" content="MapForge — maps, bâtiments et environnements sur mesure pour Garry's Mod.">
+
+6) TITLE
+Remplacer :
+<title>HBi Mapping — Maps & Buildings</title>
+Par :
+<title>MapForge — Maps & Buildings</title>
+
+7) FOOTER
+Remplacer le logo :
+<img src="assets/hbi-logo.jpg" alt="">
+Par :
+<img src="assets/mapforge-logo.png" alt="MapForge">
+
+Remplacer :
+<span>HBi <b>MAPPING</b></span>
+Par :
+<span>Map<b>Forge</b></span>
+
+Remplacer :
+© 2026 HBi Mapping · Garry's Mod
+Par :
+© 2026 MapForge · Garry's Mod
+
+8) ABOUT
+Si le texte public affiche « HBi Mapping » comme nom de marque, le remplacer par « MapForge ».

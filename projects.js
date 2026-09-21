@@ -3,44 +3,23 @@ const PROJECTS = [
     id: "redwood",
     title: "RedWood",
     category: "Maps",
-
-    description: "RedWood est une création originale pour Garry's Mod, entièrement conçue par HBi Mapping. La map propose un environnement travaillé mêlant zones résidentielles, routes, bâtiments et espaces extérieurs, avec une attention particulière portée à l'architecture, aux proportions et à l'ambiance générale. Pensée pour offrir une base immersive et polyvalente, RedWood peut s'intégrer à différents types de projets RP et servir de terrain de jeu complet pour un serveur Garry's Mod.",
-
+    description: "RedWood est une création originale pour Garry's Mod, entièrement conçue par MapForge. La map propose un environnement travaillé mêlant zones résidentielles, routes, bâtiments et espaces extérieurs, avec une attention particulière portée à l'architecture, aux proportions et à l'ambiance générale. Pensée pour offrir une base immersive et polyvalente, RedWood peut s'intégrer à différents types de projets RP et servir de terrain de jeu complet pour un serveur Garry's Mod.",
     image: "redwood-3.jpg",
-
-    images: [
-      "redwood-3.jpg",
-      "redwood-4.jpg",
-      "redwood-2.jpg",
-      "redwood-1.jpg"
-    ],
-
-    tags: [
-      "Garry's Mod",
-      "Map",
-      "Création originale"
-    ],
-
+    images: ["redwood-3.jpg", "redwood-4.jpg", "redwood-2.jpg", "redwood-1.jpg"],
+    tags: ["Garry's Mod", "Map", "Création originale"],
     price: "59,90 €",
-
     paymentUrl: "https://buy.stripe.com/28E3cxdgbdPMe0x8x65gc00",
-
     workshopUrl: "https://steamcommunity.com/sharedfiles/filedetails/?id=3805682573",
-
     status: "Disponible",
-
     version: "v1.0.0",
-
     updated: "21 septembre 2026",
-
     details: [
-      "Création originale HBi Mapping",
+      "Création originale MapForge",
       "Map conçue pour Garry's Mod",
       "Environnement urbain et résidentiel travaillé",
       "Fichier BSP inclus après achat",
       "Contenus complémentaires disponibles sur le Workshop"
     ],
-
     changelog: [
       "Première version publique de RedWood",
       "Map BSP prête à l'installation",

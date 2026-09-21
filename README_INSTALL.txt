@@ -1,24 +1,20 @@
-MAPFORGE — MISE À JOUR PAGE MON COMPTE
+MAPFORGE — PACK BRANDING CORRIGÉ
 
 Fichiers inclus :
-- espace.html : nouvelle page Mon compte, proche de la maquette fournie
-- espace.css : design sombre/violet, hero, cartes d'images, responsive
+- assets/mapforge-logo.png : nouveau logo MapForge
+- espace.html : logo + favicon + branding MapForge + cache JS corrigé
+- espace.js : redirections Supabase/Google vers /MapForge/espace.html
+- espace.css : alignement corrigé de « Mon compte »
+- projects.js / projets.js : branding MapForge
+- INDEX_MODIFICATIONS.txt : changements exacts à appliquer à index.html
 
-À remplacer dans le dépôt GitHub :
-1. espace.html
-2. espace.css
+Important :
+index.html est conservé dans le dépôt actuel avec d'autres éléments déjà personnalisés.
+Le fichier INDEX_MODIFICATIONS.txt donne les remplacements précis pour éviter d'écraser une autre modification du site.
 
-La page utilise les images RedWood déjà présentes dans le dépôt :
-- redwood-1.jpg
-- redwood-3.jpg
-- redwood-4.jpg
-
-IMPORTANT :
-Le script espace.js actuel du dépôt contient déjà la bonne URL Supabase et la clé publishable.
-Le nouveau espace.html ajoute ?v=20260921-3 à espace.js afin de forcer Chrome à charger la dernière version et éviter le cache.
-
-Pour la navigation principale :
-ajouter dans index.html, entre À propos et Me contacter :
-<a class="account-nav-link" href="espace.html">Mon compte</a>
-
-Après remplacement, fais un commit/push puis Ctrl+F5 sur le site.
+Pour GitHub :
+1. Upload assets/mapforge-logo.png dans le dossier assets/
+2. Remplace espace.html, espace.js, espace.css, projects.js et projets.js
+3. Applique INDEX_MODIFICATIONS.txt à index.html
+4. Commit changes
+5. Attends le déploiement GitHub Pages puis Ctrl+F5.

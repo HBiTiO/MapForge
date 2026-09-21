@@ -15,32 +15,3 @@
 @media(max-width:1050px){.account-layout{grid-template-columns:minmax(380px,520px) 1fr;gap:40px}.account-promo h2{font-size:48px}.account-shot{opacity:.2}}
 @media(max-width:850px){.account-navbar{padding:0 5%}.account-layout{grid-template-columns:1fr;max-width:650px;margin:auto;gap:45px}.account-promo{order:-1}.account-promo h2{font-size:48px}.account-promo>p{max-width:600px}.account-shot{opacity:.12}.account-main{padding:55px 5%}.account-navbar .main-nav{top:74px}}
 @media(max-width:600px){.account-layout{gap:35px}.auth-card{padding:25px 20px}.account-promo h2{font-size:42px}.promo-signature{margin-top:35px}.account-top{align-items:flex-start;flex-direction:column}.dashboard-grid{grid-template-columns:1fr}.account-content{padding:18px}}
-
-/* Correction alignement navigation — Mon compte */
-.account-navbar .main-nav{
-  height:100%;
-  align-items:center;
-}
-
-.account-navbar .main-nav a{
-  display:flex;
-  align-items:center;
-  height:100%;
-  position:relative;
-  box-sizing:border-box;
-}
-
-.account-navbar .main-nav .account-nav-active{
-  display:flex;
-  align-items:center;
-  height:100%;
-}
-
-.account-navbar .main-nav .account-nav-active:after{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  margin:0;
-}
-
