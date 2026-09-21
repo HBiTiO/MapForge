@@ -1,0 +1,39 @@
+# MapForge — prochaine amélioration de la fiche RedWood
+
+Cette modification ajoute automatiquement des badges supplémentaires dans la fenêtre du projet :
+
+- Statut : Disponible
+- Version : v1.0.0
+- Mise à jour : 21 septembre 2026
+
+## 1. Dans script.js
+
+Cherche cette ligne :
+
+tags.innerHTML=(current.tags||[current.category]).map(t=>`<span>${esc(t)}</span>`).join("");
+
+Remplace-la par :
+
+tags.innerHTML = [
+  ...(current.tags || [current.category]),
+  current.status ? `✓ ${current.status}` : "",
+  current.version ? current.version : "",
+  current.updated ? `Mis à jour le ${current.updated}` : ""
+].filter(Boolean).map(t => `<span>${esc(t)}</span>`).join("");
+
+## 2. Résultat
+
+La fiche RedWood affichera maintenant les badges :
+
+Garry's Mod
+Map
+Création originale
+✓ Disponible
+v1.0.0
+Mis à jour le 21 septembre 2026
+
+Aucun changement dans projects.js n'est nécessaire : les informations sont déjà présentes.
+
+## 3. Pas besoin de modifier style.css
+
+Les badges utilisent déjà le style `.modal-tags span` existant.
